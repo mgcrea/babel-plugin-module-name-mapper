@@ -1,0 +1,18 @@
+language: node_js
+sudo: false
+node_js:
+  - 'stable'
+
+# env:
+#   global:
+#     - CODACY_PROJECT_TOKEN=4814ccb7d6d244bab59ad0b776c30b10
+
+before_script:
+  - date --rfc-2822
+
+script:
+  - npm test
+  - npm run lint
+  - npm run test:coverage
+# after_script:
+#   - cat coverage/lcov.info | codacy-coverage

@@ -1,0 +1,39 @@
+{
+  "name": "babel-plugin-module-name-mapper",
+  "version": "1.0.0",
+  "description": "Babel plugin to map module resolution",
+  "main": "lib/index.js",
+  "author": "Olivier Louvignes <olivier@mgcrea.io>",
+  "repository": "github:mgcrea/babel-plugin-module-name-mapper",
+  "license": "MIT",
+  "scripts": {
+    "start": "yarn test:watch",
+    "test": "CI=true jest --runInBand --colors",
+    "test:watch": "yarn test --watch",
+    "test:coverage": "yarn test --coverage",
+    "lint": "eslint src/",
+    "build": "babel --source-maps --out-dir lib/ --ignore **/__tests__ src/",
+    "build:watch": "yarn build --watch --verbose",
+    "prepublish": "yarn build"
+  },
+  "dependencies": {
+    "find-pkg": "^2.0.0",
+    "lodash": "^4.17.11"
+  },
+  "devDependencies": {
+    "@babel/cli": "7.2.3",
+    "@babel/core": "7.2.2",
+    "@babel/node": "^7.2.2",
+    "@babel/plugin-proposal-class-properties": "^7.3.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.3.1",
+    "@babel/plugin-proposal-optional-chaining": "^7.2.0",
+    "@babel/preset-env": "^7.3.1",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.12.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-config-prettier": "^4.0.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-prettier": "^3.0.1",
+    "jest": "^24.0.0"
+  }
+}

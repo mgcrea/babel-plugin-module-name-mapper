@@ -1,5 +1,6 @@
 # Babel Component Resolver Plugin
 
+![Maintained](https://img.shields.io/badge/status-maintained-green.svg)
 [![npm version](https://img.shields.io/npm/v/babel-plugin-module-name-mapper.svg)](https://www.npmjs.com/package/babel-plugin-module-name-mapper)
 [![license](https://img.shields.io/github/license/mgcrea/babel-plugin-module-name-mapper.svg?style=flat)](https://tldrlegal.com/license/mit-license)
 [![build status](http://img.shields.io/travis/mgcrea/babel-plugin-module-name-mapper/master.svg?style=flat)](http://travis-ci.org/mgcrea/babel-plugin-module-name-mapper)

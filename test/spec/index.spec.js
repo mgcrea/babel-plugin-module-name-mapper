@@ -1,6 +1,5 @@
 import {transform} from '@babel/core';
 import {resolve} from 'path';
-import expect from 'expect';
 
 import babelPlugin from '../../src';
 

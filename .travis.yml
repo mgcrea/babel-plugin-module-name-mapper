@@ -12,6 +12,6 @@ before_script:
 
 script:
   - yarn lint
-  - yarn test:coverage
+  - yarn spec:coverage
 # after_script:
 #   - cat coverage/lcov.info | codacy-coverage

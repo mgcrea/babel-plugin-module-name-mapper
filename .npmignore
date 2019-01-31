@@ -4,3 +4,7 @@ yarn.lock
 node_modules/
 .history/
 src/
+coverage/
+test/
+*.js
+.*

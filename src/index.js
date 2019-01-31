@@ -18,9 +18,10 @@ const mapModuleNames = (path, opts, filename) => {
       return;
     }
     nextPath = replace;
+    const fileDirname = dirname(filename);
     const replaceUsesRootDir = replace.includes('<rootDir>');
     if (replaceUsesRootDir) {
-      const rootDir = lazyFindPkg(filename);
+      const rootDir = lazyFindPkg(fileDirname);
       nextPath = nextPath.replace('<rootDir>', rootDir);
     }
     const replaceUsedIndexes = replace.match(INDEXED_REPLACE_REGEX);
@@ -32,7 +33,7 @@ const mapModuleNames = (path, opts, filename) => {
       });
     }
     if (resolveRelativePaths) {
-      nextPath = relative(dirname(filename), nextPath);
+      nextPath = relative(fileDirname, nextPath);
     }
   });
 

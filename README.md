@@ -10,7 +10,6 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/277ead88f60a4326944ed45c2e218a8e)](https://www.codacy.com/app/mgcrea/babel-plugin-module-name-mapper?utm_source=github.com&utm_medium=referral&utm_content=mgcrea/babel-plugin-module-name-mapper&utm_campaign=Badge_Grade)
 [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/277ead88f60a4326944ed45c2e218a8e)](https://www.codacy.com/app/mgcrea/babel-plugin-module-name-mapper?utm_source=github.com&utm_medium=referral&utm_content=mgcrea/babel-plugin-module-name-mapper&utm_campaign=Badge_Coverage)
 
-
 This plugin adds Jest [moduleNameMapper](https://jestjs.io/docs/en/configuration.html#modulenamemapper-object-string-string) option as a babel plugin with special support for monorepos, (which is lacking for now in Jest).
 
 ## Usage

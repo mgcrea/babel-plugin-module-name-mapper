@@ -3,9 +3,9 @@ sudo: false
 node_js:
   - 'stable'
 
-# env:
-#   global:
-#     - CODACY_PROJECT_TOKEN=4814ccb7d6d244bab59ad0b776c30b10
+env:
+  global:
+    - CODECOV_TOKEN="cf4b16e7-5d70-4996-8807-462317d480a4"
 
 before_script:
   - date --rfc-2822
@@ -14,5 +14,3 @@ script:
   - yarn lint
   - yarn pretty
   - yarn spec:coverage
-# after_script:
-#   - cat coverage/lcov.info | codacy-coverage

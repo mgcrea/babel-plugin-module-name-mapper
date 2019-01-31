@@ -32,22 +32,22 @@ yarn add --dev babel-plugin-module-name-mapper
 
 1. Add the plugin to your `.babel.config.js` (or `.babelrc`)
 
-   ```js
-   module.exports = {
-     presets: [['@babel/preset-env']],
-     plugins: [
-       [
-         'babel-plugin-module-name-mapper',
-         {
-           moduleNameMapper: {
-             '^src/(.*)': '<rootDir>/src/$1',
-             underscore: 'lodash'
-           }
-         }
-       ]
-     ]
-   };
-   ```
+```js
+module.exports = {
+  presets: [['@babel/preset-env']],
+  plugins: [
+    [
+      'babel-plugin-module-name-mapper',
+      {
+        moduleNameMapper: {
+          '^src/(.*)': '<rootDir>/src/$1',
+          underscore: 'lodash'
+        }
+      }
+    ]
+  ]
+};
+```
 
 ### Available scripts
 

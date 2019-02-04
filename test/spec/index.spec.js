@@ -4,6 +4,8 @@ import {resolve} from 'path';
 import babelPlugin from '../../src';
 
 const ROOT_DIR = resolve(`${__dirname}/../..`);
+const PKG_DIR = resolve(`${__dirname}/../fixtures`);
+const FIXTURE_FILENAME = `${PKG_DIR}/src/foo/bar/index.js`;
 
 const testRequireImport = (source, expected, transformOpts) => {
   it('with a require statement', () => {
@@ -19,54 +21,162 @@ const testRequireImport = (source, expected, transformOpts) => {
 };
 
 describe('plugin', () => {
-  describe('using <rootDir> with absolute paths', () => {
-    const transformOpts = {
-      babelrc: false,
-      plugins: [
-        [
-          babelPlugin,
-          {
-            resolveRelativePaths: false,
-            moduleNameMapper: {
-              '^src/(.*)': '<rootDir>/src/$1'
+  describe('using a basic mapping', () => {
+    describe('with absolute paths', () => {
+      const transformOpts = {
+        babelrc: false,
+        plugins: [
+          [
+            babelPlugin,
+            {
+              resolveRelativePaths: false,
+              moduleNameMapper: {
+                underscore: 'lodash'
+              }
             }
-          }
-        ]
-      ],
-      filename: `${__dirname}/index.js`
-    };
+          ]
+        ],
+        filename: FIXTURE_FILENAME
+      };
 
-    describe('should not break regular resolution', () => {
-      testRequireImport('lodash', 'lodash', transformOpts);
+      describe('should not break regular resolution', () => {
+        testRequireImport('express', 'express', transformOpts);
+      });
+
+      describe('should properly resolve the file path', () => {
+        testRequireImport('underscore', 'lodash', transformOpts);
+      });
     });
+    describe('with relative paths', () => {
+      const transformOpts = {
+        babelrc: false,
+        plugins: [
+          [
+            babelPlugin,
+            {
+              resolveRelativePaths: true,
+              moduleNameMapper: {
+                underscore: 'lodash'
+              }
+            }
+          ]
+        ],
+        filename: FIXTURE_FILENAME
+      };
 
-    describe('should properly resolve the file path', () => {
-      testRequireImport('src/foo', `${ROOT_DIR}/src/foo`, transformOpts);
+      describe('should not break regular resolution', () => {
+        testRequireImport('express', 'express', transformOpts);
+      });
+
+      describe('should properly resolve the file path', () => {
+        testRequireImport('underscore', 'lodash', transformOpts);
+      });
     });
   });
-  describe('using <rootDir> with relative paths', () => {
-    const transformOpts = {
-      babelrc: false,
-      plugins: [
-        [
-          babelPlugin,
-          {
-            resolveRelativePaths: true,
-            moduleNameMapper: {
-              '^src/(.*)': '<rootDir>/src/$1'
+
+  describe('using <pkgDir>', () => {
+    describe('with absolute paths', () => {
+      const transformOpts = {
+        babelrc: false,
+        plugins: [
+          [
+            babelPlugin,
+            {
+              resolveRelativePaths: false,
+              moduleNameMapper: {
+                '^src/(.*)': '<pkgDir>/src/$1'
+              }
             }
-          }
-        ]
-      ],
-      filename: `${ROOT_DIR}/src/foo/bar/index.js`
-    };
+          ]
+        ],
+        filename: FIXTURE_FILENAME
+      };
 
-    describe('should not break regular resolution', () => {
-      testRequireImport('lodash', 'lodash', transformOpts);
+      describe('should not break regular resolution', () => {
+        testRequireImport('express', 'express', transformOpts);
+      });
+
+      describe('should properly resolve the file path', () => {
+        testRequireImport('src/foo', `${PKG_DIR}/src/foo`, transformOpts);
+      });
     });
+    describe('with relative paths', () => {
+      const transformOpts = {
+        babelrc: false,
+        plugins: [
+          [
+            babelPlugin,
+            {
+              resolveRelativePaths: true,
+              moduleNameMapper: {
+                '^src/(.*)': '<pkgDir>/src/$1'
+              }
+            }
+          ]
+        ],
+        filename: FIXTURE_FILENAME
+      };
 
-    describe('should properly resolve the file path', () => {
-      testRequireImport('src/baz', '../../baz', transformOpts);
+      describe('should not break regular resolution', () => {
+        testRequireImport('express', 'express', transformOpts);
+      });
+
+      describe('should properly resolve the file path', () => {
+        testRequireImport('src/baz', '../../baz', transformOpts);
+      });
+    });
+  });
+
+  describe('using <rootDir>', () => {
+    describe('with absolute paths', () => {
+      const transformOpts = {
+        babelrc: false,
+        plugins: [
+          [
+            babelPlugin,
+            {
+              resolveRelativePaths: false,
+              moduleNameMapper: {
+                '^src/(.*)': '<rootDir>/src/$1'
+              }
+            }
+          ]
+        ],
+        filename: FIXTURE_FILENAME
+      };
+
+      describe('should not break regular resolution', () => {
+        testRequireImport('express', 'express', transformOpts);
+      });
+
+      describe('should properly resolve the file path', () => {
+        testRequireImport('src/foo', `${ROOT_DIR}/src/foo`, transformOpts);
+      });
+    });
+    describe('with relative paths', () => {
+      const transformOpts = {
+        babelrc: false,
+        plugins: [
+          [
+            babelPlugin,
+            {
+              resolveRelativePaths: true,
+              moduleNameMapper: {
+                '^src/(.*)': '<rootDir>/src/$1'
+              }
+            }
+          ]
+        ],
+        filename: FIXTURE_FILENAME
+      };
+
+      describe('should not break regular resolution', () => {
+        testRequireImport('express', 'express', transformOpts);
+      });
+
+      describe('should properly resolve the file path', () => {
+        testRequireImport('src/baz', '../../../../../src/baz', transformOpts);
+      });
     });
   });
 });

@@ -1,4 +1,4 @@
-# Babel Component Resolver Plugin
+# Babel Module Name Mapper Plugin
 
 ![status](https://img.shields.io/badge/status-maintained-brightgreen.svg)
 [![npm version](https://img.shields.io/npm/v/babel-plugin-module-name-mapper.svg)](https://www.npmjs.com/package/babel-plugin-module-name-mapper)
@@ -10,7 +10,11 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/277ead88f60a4326944ed45c2e218a8e)](https://www.codacy.com/app/mgcrea/babel-plugin-module-name-mapper?utm_source=github.com&utm_medium=referral&utm_content=mgcrea/babel-plugin-module-name-mapper&utm_campaign=Badge_Grade)
 [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/277ead88f60a4326944ed45c2e218a8e)](https://www.codacy.com/app/mgcrea/babel-plugin-module-name-mapper?utm_source=github.com&utm_medium=referral&utm_content=mgcrea/babel-plugin-module-name-mapper&utm_campaign=Badge_Coverage)
 
-This plugin adds Jest [moduleNameMapper](https://jestjs.io/docs/en/configuration.html#modulenamemapper-object-string-string) option as a babel plugin with special support for monorepos, (which is lacking for now in Jest).
+This plugin adds a Jest-like [moduleNameMapper](https://jestjs.io/docs/en/configuration.html#modulenamemapper-object-string-string) option as a babel plugin.
+
+It mostly adds a `<pkgDir>` string token that will resolve to the dirname of the closest `package.json` in order to support monorepos, (which is lacking for now in both Jest/Webpack).
+
+It also supports the classic `<rootDir>` string token.
 
 ## Usage
 
@@ -41,7 +45,7 @@ module.exports = {
       'babel-plugin-module-name-mapper',
       {
         moduleNameMapper: {
-          '^src/(.*)': '<rootDir>/src/$1',
+          '^src/(.*)': '<pkgDir>/src/$1',
           underscore: 'lodash'
         }
       }

@@ -1,11 +1,13 @@
 import {dirname, relative} from 'path';
 import {lazyFindPkg, traverseExpression} from './utils';
+
 // require('debug-utils').install();
 
 const INDEXED_REPLACE_REGEX = /\$\d+/g;
 
-const mapModuleNames = (path, opts, filename) => {
+const mapModuleNames = (path, opts, fileOpts) => {
   const {moduleNameMapper, resolveRelativePaths = true} = opts;
+  const {root, filename} = fileOpts;
   if (!moduleNameMapper) {
     return path;
   }
@@ -21,8 +23,12 @@ const mapModuleNames = (path, opts, filename) => {
     const fileDirname = dirname(filename);
     const replaceUsesRootDir = replace.includes('<rootDir>');
     if (replaceUsesRootDir) {
-      const rootDir = lazyFindPkg(fileDirname);
-      nextPath = nextPath.replace('<rootDir>', rootDir);
+      nextPath = nextPath.replace('<rootDir>', root);
+    }
+    const replaceUsesPkgDir = replace.includes('<pkgDir>');
+    if (replaceUsesPkgDir) {
+      const pkgDir = lazyFindPkg(fileDirname);
+      nextPath = nextPath.replace('<pkgDir>', pkgDir);
     }
     const replaceUsedIndexes = replace.match(INDEXED_REPLACE_REGEX);
     if (replaceUsedIndexes) {
@@ -32,7 +38,8 @@ const mapModuleNames = (path, opts, filename) => {
         nextPath = nextPath.split(index).join(replacedValue);
       });
     }
-    if (resolveRelativePaths) {
+    const replaceCouldBeRelative = replaceUsesRootDir || replaceUsesPkgDir;
+    if (replaceCouldBeRelative && resolveRelativePaths) {
       nextPath = relative(fileDirname, nextPath);
     }
   });
@@ -55,20 +62,20 @@ export default ({types: t}) => {
       const firstArg = traverseExpression(t, args[0]);
 
       if (firstArg) {
-        firstArg.value = mapModuleNames(firstArg.value, state.opts, state.file.opts.filename);
+        firstArg.value = mapModuleNames(firstArg.value, state.opts, state.file.opts);
       }
     },
     ImportDeclaration(path, state) {
-      path.node.source.value = mapModuleNames(path.node.source.value, state.opts, state.file.opts.filename); // eslint-disable-line no-param-reassign
+      path.node.source.value = mapModuleNames(path.node.source.value, state.opts, state.file.opts); // eslint-disable-line no-param-reassign
     },
     ExportNamedDeclaration(path, state) {
       if (path.node.source) {
-        path.node.source.value = mapModuleNames(path.node.source.value, state.opts, state.file.opts.filename); // eslint-disable-line no-param-reassign
+        path.node.source.value = mapModuleNames(path.node.source.value, state.opts, state.file.opts); // eslint-disable-line no-param-reassign
       }
     },
     ExportAllDeclaration(path, state) {
       if (path.node.source) {
-        path.node.source.value = mapModuleNames(path.node.source.value, state.opts, state.file.opts.filename); // eslint-disable-line no-param-reassign
+        path.node.source.value = mapModuleNames(path.node.source.value, state.opts, state.file.opts); // eslint-disable-line no-param-reassign
       }
     }
   };

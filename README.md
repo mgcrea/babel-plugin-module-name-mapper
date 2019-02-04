@@ -7,8 +7,8 @@
 [![build status](http://img.shields.io/travis/mgcrea/babel-plugin-module-name-mapper/master.svg?style=flat)](http://travis-ci.org/mgcrea/babel-plugin-module-name-mapper)
 [![dependencies status](https://img.shields.io/david/mgcrea/babel-plugin-module-name-mapper.svg?style=flat)](https://david-dm.org/mgcrea/babel-plugin-module-name-mapper)
 [![devDependencies status](https://img.shields.io/david/dev/mgcrea/babel-plugin-module-name-mapper.svg?style=flat)](https://david-dm.org/mgcrea/babel-plugin-module-name-mapper#info=devDependencies)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/277ead88f60a4326944ed45c2e218a8e)](https://www.codacy.com/app/mgcrea/babel-plugin-module-name-mapper?utm_source=github.com&utm_medium=referral&utm_content=mgcrea/babel-plugin-module-name-mapper&utm_campaign=Badge_Grade)
-[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/277ead88f60a4326944ed45c2e218a8e)](https://www.codacy.com/app/mgcrea/babel-plugin-module-name-mapper?utm_source=github.com&utm_medium=referral&utm_content=mgcrea/babel-plugin-module-name-mapper&utm_campaign=Badge_Coverage)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/a9aef0592ea44fae88864321d5f14473)](https://www.codacy.com/app/mgcrea/babel-plugin-module-name-mapper?utm_source=github.com&utm_medium=referral&utm_content=mgcrea/babel-plugin-module-name-mapper&utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/a9aef0592ea44fae88864321d5f14473)](https://www.codacy.com/app/mgcrea/babel-plugin-module-name-mapper?utm_source=github.com&utm_medium=referral&utm_content=mgcrea/babel-plugin-module-name-mapper&utm_campaign=Badge_Coverage)
 
 This plugin adds a Jest-like [moduleNameMapper](https://jestjs.io/docs/en/configuration.html#modulenamemapper-object-string-string) option as a babel plugin.
 
@@ -18,7 +18,7 @@ It also supports the classic `<rootDir>` string token.
 
 ## Usage
 
-Allow you to drop relative path usage for prefixed paths.
+This plugin allows you to drop relative path usage for prefixed paths.
 
 ```js
 // Instead of:
@@ -53,6 +53,22 @@ module.exports = {
   ]
 };
 ```
+
+### Examples
+
+```js
+module.exports = {
+  moduleNameMapper: {
+    '^src/(.*)': '<pkgDir>/src/$1',
+    '^image![a-zA-Z0-9$_-]+$': 'GlobalImageStub',
+    '^[./a-zA-Z0-9$_-]+\\.png$': '<rootDir>/RelativeImageStub.js',
+    '^module_name_(.*)': '<rootDir>/substituted_module_$1.js',
+    underscore: 'lodash'
+  }
+};
+```
+
+> Note: If you provide module name without boundaries `^\$` it may cause hard to spot errors. E.g. relay will replace all modules which contain relay as a substring in its name: relay, react-relay and graphql-relay will all be pointed to your stub.
 
 ### Available scripts
 

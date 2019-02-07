@@ -1,5 +1,5 @@
 import {dirname, relative} from 'path';
-import {lazyFindPkg, traverseExpression} from './utils';
+import {lazyFindPkgDir, traverseExpression} from './utils';
 
 // require('debug-utils').install();
 
@@ -26,7 +26,7 @@ const mapModuleNames = (path, opts, fileOpts) => {
     }
     const replaceUsesPkgDir = replace.includes('<pkgDir>');
     if (replaceUsesPkgDir) {
-      const pkgDir = lazyFindPkg(fileDirname);
+      const pkgDir = lazyFindPkgDir(fileDirname);
       nextPath = nextPath.replace('<pkgDir>', pkgDir);
     }
     const replaceUsedIndexes = replace.match(INDEXED_REPLACE_REGEX);

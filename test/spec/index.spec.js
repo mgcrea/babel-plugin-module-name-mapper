@@ -124,6 +124,10 @@ describe('plugin', () => {
       describe('should properly resolve the file path', () => {
         testRequireImport('src/baz', '../../baz', transformOpts);
       });
+
+      describe('should properly resolve the file path in same directory', () => {
+        testRequireImport('src/foo/bar/baz', './baz', transformOpts);
+      });
     });
   });
 

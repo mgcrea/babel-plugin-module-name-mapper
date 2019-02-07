@@ -40,6 +40,10 @@ const mapModuleNames = (path, opts, fileOpts) => {
     const replaceCouldBeRelative = replaceUsesRootDir || replaceUsesPkgDir;
     if (replaceCouldBeRelative && resolveRelativePaths) {
       nextPath = relative(fileDirname, nextPath);
+      // Handle siblings/children paths
+      if (!nextPath.startsWith('.')) {
+        nextPath = `./${nextPath}`;
+      }
     }
   });
 

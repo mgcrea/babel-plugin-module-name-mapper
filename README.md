@@ -42,11 +42,10 @@ module.exports = {
   presets: [['@babel/preset-env']],
   plugins: [
     [
-      'babel-plugin-module-name-mapper',
+      'module-name-mapper',
       {
         moduleNameMapper: {
-          '^src/(.*)': '<pkgDir>/src/$1',
-          underscore: 'lodash'
+          '^src/(.*)': '<pkgDir>/src/$1'
         }
       }
     ]
@@ -54,17 +53,25 @@ module.exports = {
 };
 ```
 
-### Examples
+### Other examples
 
 ```js
 module.exports = {
-  moduleNameMapper: {
-    '^src/(.*)': '<pkgDir>/src/$1',
-    '^image![a-zA-Z0-9$_-]+$': 'GlobalImageStub',
-    '^[./a-zA-Z0-9$_-]+\\.png$': '<rootDir>/RelativeImageStub.js',
-    '^module_name_(.*)': '<rootDir>/substituted_module_$1.js',
-    underscore: 'lodash'
-  }
+  presets: [['@babel/preset-env']],
+  plugins: [
+    [
+      'module-name-mapper',
+      {
+        moduleNameMapper: {
+          '^src/(.*)': '<pkgDir>/src/$1',
+          '^image![a-zA-Z0-9$_-]+$': 'GlobalImageStub',
+          '^[./a-zA-Z0-9$_-]+\\.png$': '<rootDir>/RelativeImageStub.js',
+          '^module_name_(.*)': '<rootDir>/substituted_module_$1.js',
+          underscore: 'lodash'
+        }
+      }
+    ]
+  ]
 };
 ```
 

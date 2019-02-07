@@ -14,7 +14,7 @@
     "spec:coverage": "yarn spec --coverage",
     "lint": "eslint src/ test/",
     "pretty": "prettier --check 'src/**/*.js'",
-    "build": "babel --source-maps --out-dir lib/ --ignore **/__tests__ src/",
+    "build": "babel --source-maps --out-dir lib/ --delete-dir-on-start --ignore **/__tests__ src/",
     "build:watch": "yarn build --watch --verbose",
     "prepublish": "yarn build"
   },

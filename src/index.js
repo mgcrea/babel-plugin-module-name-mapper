@@ -11,7 +11,7 @@ const mapModuleNames = (path, opts, fileOpts) => {
   if (!moduleNameMapper) {
     return path;
   }
-
+  const fileDirname = dirname(filename);
   let nextPath = path;
   Object.keys(moduleNameMapper).forEach(find => {
     const replace = moduleNameMapper[find];
@@ -20,7 +20,6 @@ const mapModuleNames = (path, opts, fileOpts) => {
       return;
     }
     nextPath = replace;
-    const fileDirname = dirname(filename);
     const replaceUsesRootDir = replace.includes('<rootDir>');
     if (replaceUsesRootDir) {
       nextPath = nextPath.replace('<rootDir>', root);

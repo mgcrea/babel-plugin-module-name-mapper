@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-module-name-mapper",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "Babel plugin to map module resolution",
   "main": "lib/index.js",
   "author": "Olivier Louvignes <olivier@mgcrea.io>",
